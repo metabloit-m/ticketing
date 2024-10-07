@@ -1,5 +1,5 @@
 name: Auth Testing
-run-name: ${{github.actor}} testing auth
+run-name: ${{ github.actor }} testing auth
 on: pull_request
 
 jobs:
@@ -7,11 +7,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "The job was automatically triggered by a ${{github.event_name}} event."
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Checkout the repository
         uses: actions/checkout@v4
-      - run: echo "The ${{github.repository}} has been cloned to the runner."
+      - run: echo "The ${{ github.repository }} has been cloned to the runner."
       - run: echo "Now running rests."
+      - name: List files in the repository
+        run: ls ${{ github.workspace }}
       - name: Change directory in repository
         run: cd auth
       - name: Install project dependencies
