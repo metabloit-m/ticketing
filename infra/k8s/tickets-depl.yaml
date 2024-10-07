@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tickets
+  template:
+    metadata:
+      labels:
+        app: tickets
+    spec:
+      initContainers:
+      - name: wait-for-nats
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup nats-srv.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for nats-srv; sleep 2; done"]
+      - name: wait-for-nats-init
+        image: busybox
+        command: ['sh', '-c', "until nslookup nats-init-srv.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for nats-init-srv; sleep 2; done"]
+      containers:
+      - name: tickets
+        image: metabloit/tickets
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NATS_URL
+          value: 'http://nats-srv:4222'
+        - name: MONGO_URI
+          value: 'mongodb://tickets-mongo-srv:27017/tickets'
+        - name: JWT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secret
+              key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tickets-srv
+spec:
+  selector:
+    app: tickets
+  ports:
+  - name: tickets
+    protocol: TCP
+    port: 3000
+    targetPort: 3000

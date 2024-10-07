@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nats-init-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nats-init
+  template:
+    metadata:
+      labels:
+        app: nats-init
+    spec:
+      initContainers:
+      - name: wait-for-nats
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup nats-srv.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for nats-init-srv; sleep 2; done"]
+      containers:
+      - name: nats-init
+        image: metabloit/nats-init:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NATS_URL
+          value: http://nats-srv:4222
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nats-init-srv
+spec:
+  selector:
+    app: nats-init
+  ports:
+  - name: nats-init
+    protocol: TCP
+    port: 4000
+    targetPort: 4000

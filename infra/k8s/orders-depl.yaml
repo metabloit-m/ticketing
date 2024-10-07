@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders
+  template:
+    metadata:
+      labels:
+        app: orders
+    spec:
+      initContainers:
+      - name: wait-for-nats
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup nats-srv.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for nats-srv; sleep 2; done"]
+      - name: wait-for-nats-init
+        image: busybox
+        command: ['sh', '-c', "until nslookup nats-init-srv.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for nats-init-srv; sleep 2; done"]
+      containers:
+      - name: orders
+        image: metabloit/orders:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NATS_URL
+          value: 'http://nats-srv:4222'
+        - name: MONGO_URI
+          value: 'mongodb://orders-mongo-srv:27017/orders'
+        - name: JWT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secret
+              key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-srv
+spec:
+  selector:
+    app: orders
+  ports:
+  - name: orders
+    protocol: TCP
+    port: 3000
+    targetPort: 3000

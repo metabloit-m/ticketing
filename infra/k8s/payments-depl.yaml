@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payments
+  template:
+    metadata:
+      labels:
+        app: payments
+    spec:
+      initContainers:
+      - name: wait-for-nats
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup nats-srv.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for nats-srv; sleep 2; done"]
+      - name: wait-for-nats-init
+        image: busybox
+        command: ['sh', '-c', "until nslookup nats-init-srv.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for nats-init-srv; sleep 2; done"]
+      containers:
+      - name: payments
+        image: metabloit/payments:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NATS_URL
+          value: 'http://nats-srv:4222'
+        - name: MONGO_URI
+          value: 'mongodb://payments-mongo-srv:27017/payments'
+        - name: JWT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secret
+              key: JWT_KEY
+        - name: STRIPE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: stripe-secret
+              key: STRIPE_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments-srv
+spec:
+  selector:
+    app: payments
+  ports:
+  - name: payments
+    protocol: TCP
+    port: 3000
+    targetPort: 3000

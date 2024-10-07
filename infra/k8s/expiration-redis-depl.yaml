@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-redis-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expiration-redis
+  template:
+    metadata:
+      labels:
+        app: expiration-redis
+    spec:
+      initContainers:
+      - name: wait-for-nats
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup nats-srv.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for nats-srv; sleep 2; done"]
+      - name: wait-for-nats-init
+        image: busybox
+        command: ['sh', '-c', "until nslookup nats-init-srv.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for nats-init-srv; sleep 2; done"]
+      containers:
+      - name: expiration-redis
+        image: redis
+        imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: expiration-redis-srv
+spec:
+  selector:
+    app: expiration-redis
+  ports:
+  - name: db
+    protocol: TCP
+    port: 6379
+    targetPort: 6379
