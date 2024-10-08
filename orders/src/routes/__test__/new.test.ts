@@ -6,7 +6,7 @@ import { Order, OrderStatus } from "../../models/order.js";
 import { natswrapper } from "../../nats-wrapper.js";
 
 it("returns an error if ticket does not exist", async () => {
-  const ticketId = mongoose.Types.ObjectId;
+  const ticketId = new mongoose.Types.ObjectId().toHexString();
   request(app)
     .post("/api/orders")
     .set("Cookie", global.signin())
