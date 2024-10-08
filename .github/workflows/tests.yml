@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./auth
+        working-directory: auth
 
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
