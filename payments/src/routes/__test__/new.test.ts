@@ -92,6 +92,7 @@ it("returns 201 for valid entries", async () => {
   const stripeCharge = stripeCharges.data.find(
     (charge) => charge.amount === price * 100,
   );
+  console.info(stripeCharge);
 
   expect(stripeCharge).toBeDefined();
   expect(stripeCharge?.currency).toEqual("tzs");
