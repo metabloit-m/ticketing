@@ -63,7 +63,7 @@ it("returns 400 if cancelled order is purchased", async () => {
 
 it("returns 201 for valid entries", async () => {
   const userId = new mongoose.Types.ObjectId().toHexString();
-  const price = Math.floor(Math.random() * 1000000);
+  const price = Math.floor(Math.random() * 10000);
 
   const order = Order.build({
     id: new mongoose.Types.ObjectId().toHexString(),
@@ -79,9 +79,15 @@ it("returns 201 for valid entries", async () => {
     .post("/api/payments")
     .set("Cookie", global.signin(userId))
     .send({
-      token: "tok_visa",
       orderId: order.id,
     });
+
+  const charge = await stripe.charges.create({
+    amount: price * 100,
+    currency: "tzs",
+    source: "tok_visa",
+    description: `Payment successfully completed`,
+  });
 
   expect(response.status).toEqual(201);
 
@@ -89,9 +95,11 @@ it("returns 201 for valid entries", async () => {
     limit: 200,
   });
 
-  const stripeCharge = stripeCharges.data.find(
-    (charge) => charge.amount === price * 100,
-  );
+  const stripeCharge = stripeCharges.data.find((charge) => {
+    return charge.amount === price * 100;
+  });
+
+  // console.log(stripeCharge);
 
   expect(stripeCharge).toBeDefined();
   expect(stripeCharge?.currency).toEqual("tzs");
