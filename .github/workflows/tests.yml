@@ -67,5 +67,6 @@ jobs:
         run: |
           npm install
           npm run test:ci
+          echo "Stripe key is ${{ secrets.STRIPE_KEY }}"
         env:
           STRIPE_KEY: ${{ secrets.STRIPE_KEY }}
