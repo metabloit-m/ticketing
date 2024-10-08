@@ -93,6 +93,7 @@ it("returns 201 for valid entries", async () => {
     (charge) => charge.amount === price * 100,
   );
   console.info(stripeCharge);
+  console.info(process.env.STRIPE_KEY);
 
   expect(stripeCharge).toBeDefined();
   expect(stripeCharge?.currency).toEqual("tzs");
