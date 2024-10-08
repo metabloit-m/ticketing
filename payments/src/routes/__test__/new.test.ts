@@ -86,14 +86,12 @@ it("returns 201 for valid entries", async () => {
   expect(response.status).toEqual(201);
 
   const stripeCharges = await stripe.charges.list({
-    limit: 50,
+    limit: 200,
   });
 
   const stripeCharge = stripeCharges.data.find(
     (charge) => charge.amount === price * 100,
   );
-  console.info(stripeCharge);
-  console.info(process.env.STRIPE_KEY);
 
   expect(stripeCharge).toBeDefined();
   expect(stripeCharge?.currency).toEqual("tzs");
