@@ -60,7 +60,7 @@ router.post(
       },
     });
 
-    return res.status(201).send(order);
+    res.status(201).send(order);
   },
 );
 
