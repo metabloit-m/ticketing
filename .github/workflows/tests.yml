@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} testing auth
 on: pull_request
 
 jobs:
-  build:
+  auth-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,6 +16,54 @@ jobs:
         run: ls ${{ github.workspace }}
       - name: Setup project and run tests
         working-directory: ./auth
+        run: |
+          npm install
+          npm run test:ci
+  orders-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+      - run: echo "The ${{ github.repository }} has been cloned to the runner."
+      - run: echo "Now running rests."
+      - name: List files in the auth directory
+        run: ls ${{ github.workspace }}
+      - name: Setup project and run tests
+        working-directory: ./orders
+        run: |
+          npm install
+          npm run test:ci
+  tickets-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+      - run: echo "The ${{ github.repository }} has been cloned to the runner."
+      - run: echo "Now running rests."
+      - name: List files in the auth directory
+        run: ls ${{ github.workspace }}
+      - name: Setup project and run tests
+        working-directory: ./tickets
+        run: |
+          npm install
+          npm run test:ci
+  payments-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+      - run: echo "The ${{ github.repository }} has been cloned to the runner."
+      - run: echo "Now running rests."
+      - name: List files in the auth directory
+        run: ls ${{ github.workspace }}
+      - name: Setup project and run tests
+        working-directory: ./payments
         run: |
           npm install
           npm run test:ci
