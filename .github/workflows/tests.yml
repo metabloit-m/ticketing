@@ -5,9 +5,6 @@ on: pull_request
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: auth
 
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
@@ -17,7 +14,8 @@ jobs:
       - run: echo "Now running rests."
       - name: List files in the auth directory
         run: ls ${{ github.workspace }}
-      - name: Install project dependencies
-        run: npm install
-      - name: Run tests
-        run: npm run test:ci
+      - name: Setup project and run tests
+        working-directory: ./auth
+        run: |
+          npm install
+          npm run test:ci
