@@ -1,5 +1,5 @@
 name: Tickets Testing
-run-name: ${{ github.actor }} testing auth
+run-name: ${{ github.actor }} testing tickets
 on: 
   pull_request:
     paths:

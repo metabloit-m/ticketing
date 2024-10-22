@@ -1,5 +1,5 @@
 name: Payments Testing
-run-name: ${{ github.actor }} testing auth
+run-name: ${{ github.actor }} testing payments
 on: 
   pull_request:
     paths:
