@@ -1,0 +1,25 @@
+name: Manifests Deployment
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'infra/**'
+
+jobs:
+  manifests-deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+      - run: echo "The ${{ github.repository }} has been cloned to the runner."
+      - name: Deploy the service
+        uses: digitalocean/app_action/deploy@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Setting up kubeconfig
+        run: doctl kubernetes cluster kubeconfig save e19d9368-2922-4d57-99a8-3315b0b950eb
+      - name: Applying k8s config
+        run: kubectl apply -f infra/k8s
