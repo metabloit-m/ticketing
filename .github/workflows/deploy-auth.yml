@@ -31,3 +31,7 @@ jobs:
         uses: digitalocean/app_action/deploy@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Setting up kubeconfig
+        run: doctl kubernetes cluster kubeconfig save e19d9368-2922-4d57-99a8-3315b0b950eb
+      - name: Making sure up-to-date image is used
+        run: kubectl rollout restart deployment auth-depl
