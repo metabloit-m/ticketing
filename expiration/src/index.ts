@@ -2,8 +2,6 @@ import { OrderCreatedListener } from "./events/listeners/order-created-listener.
 import { natswrapper } from "./nats-wrapper.js";
 
 const run = async () => {
-  console.info("Starting ....");
-
   if (!process.env.NATS_URL) {
     throw new Error("NATS URI must be defined");
   }

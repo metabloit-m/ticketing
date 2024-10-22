@@ -1,15 +1,15 @@
-name: Auth Deployment
-run-name: ${{ github.actor }} deploying auth
+name: Client Deployment
+run-name: ${{ github.actor }} deploying client
 
 on:
   push:
     branches:
       - master
     paths:
-      - 'auth/**'
+      - 'client/**'
 
 jobs:
-  auth-deployment:
+  client-deployment:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,15 +18,15 @@ jobs:
         uses: actions/checkout@v4
       - run: echo "The ${{ github.repository }} has been cloned to the runner."
       - name: Build image and login to Docker Hub
-        working-directory: ./auth
+        working-directory: ./client
         run: |
-          docker build -t metabloit/auth .
+          docker build -t metabloit/client .
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       - name: Push image to Docker Hub
-        run: docker push metabloit/auth
+        run: docker push metabloit/client
       - name: Deploy the service
         uses: digitalocean/action-doctl@v2
         with:
@@ -34,4 +34,4 @@ jobs:
       - name: Setting up kubeconfig
         run: doctl kubernetes cluster kubeconfig save e19d9368-2922-4d57-99a8-3315b0b950eb
       - name: Making sure up-to-date image is used
-        run: kubectl rollout restart deployment auth-depl
+        run: kubectl rollout restart deployment client-depl
