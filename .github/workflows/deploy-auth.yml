@@ -1,0 +1,29 @@
+name: Auth Deployment
+run-name: ${{ github.actor }} deploying auth
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'auth/**'
+
+jobs:
+  auth-deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+      - run: echo "The ${{ github.repository }} has been cloned to the runner."
+      - name: Build image and login to Docker Hub
+        working-directory: ./auth
+        run: |
+          docker build -t metabloit/auth .
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push image to Docker Hub
+        run: docker push metabloit/auth
