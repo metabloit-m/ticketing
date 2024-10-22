@@ -7,7 +7,8 @@ export default async function Page() {
 
   return (
     <div className={'mx-auto max-w-6xl'}>
-      Landing Page here!!, welcome, {currentUser?.email || 'guest'}
+      Landing Page here!!, welcome to the ticketing service,{' '}
+      {currentUser?.email || 'guest'}
     </div>
   );
 }
