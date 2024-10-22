@@ -22,4 +22,6 @@ jobs:
       - name: Setting up kubeconfig
         run: doctl kubernetes cluster kubeconfig save e19d9368-2922-4d57-99a8-3315b0b950eb
       - name: Applying k8s config
-        run: kubectl apply -f infra/k8s
+        run: |
+          kubectl apply -f infra/k8s
+          kubectl apply -f infra/k8s-prod
