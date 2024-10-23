@@ -6,7 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-  - host: metabloit.xyz
+  - host: www.metabloit.xyz
     http:
       paths:
       - path: /api/payments/?(.*)

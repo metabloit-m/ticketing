@@ -28,7 +28,7 @@ jobs:
       - name: Push image to Docker Hub
         run: docker push metabloit/orders
       - name: Deploy the service
-        uses: digitalocean/app_action/deploy@v2
+        uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - name: Setting up kubeconfig
