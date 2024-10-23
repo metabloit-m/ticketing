@@ -9,7 +9,7 @@ export default async function middleware(request: NextRequest) {
   const {
     data: { currentUser },
   } = await buildClient(Object.fromEntries(requestHeaders)).get(
-    'http://metabloit.xyz/api/users/currentuser'
+    '/api/users/currentuser'
   );
 
   if (currentUser)
