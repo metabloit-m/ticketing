@@ -1,7 +1,7 @@
 import { natswrapper } from "./nats-wrapper.js";
 
 async function main() {
-  console.info("Starting nats-init...");
+  console.info("Starting nats-initializer...");
   if (!process.env.NATS_URL) {
     throw new Error("NATS URI must be defined");
   }
