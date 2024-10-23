@@ -4,7 +4,12 @@ metadata:
   name: ingress-service
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
+  tls:
+  - hosts:
+    - metabloit.xyz
+    secretName: metabloit-tls
   rules:
   - host: metabloit.xyz
     http:
