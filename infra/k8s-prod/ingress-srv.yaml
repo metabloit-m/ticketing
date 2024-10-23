@@ -9,36 +9,36 @@ spec:
   - host: metabloit.xyz
     http:
       paths:
-      - path: /api/payments(/|$)(.*)
-        pathType: Prefix
+      - path: /api/payments/?(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: payments-srv
             port:
               number: 3000
-      - path: /api/users(/|$)(.*)
-        pathType: Prefix
+      - path: /api/users/?(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: auth-srv
             port:
               number: 3000
-      - path: /api/tickets(/|$)(.*)
-        pathType: Prefix
+      - path: /api/tickets/?(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: tickets-srv
             port:
               number: 3000
-      - path: /api/orders(/|$)(.*)
-        pathType: Prefix
+      - path: /api/orders/?(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: orders-srv
             port:
               number: 3000
       - path: /?(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: client-srv
