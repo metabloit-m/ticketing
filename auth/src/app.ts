@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cookieSession from "cookie-session";
 import "express-async-errors";
 import mongoose from "mongoose";
+import cors from "cors";
 import { currentUserRouter } from "./routes/current-user.js";
 import { signinRouter } from "./routes/signin.js";
 import { signupRouter } from "./routes/signup.js";
@@ -12,6 +13,11 @@ import { NotFoundError } from "@metabloit.io/common";
 
 const app = express();
 app.set("trust proxy", true);
+app.use(
+  cors({
+    origin: "https://metabloit.xyz",
+  }),
+);
 app.use(bodyParser.json());
 app.use(
   cookieSession({
