@@ -15,7 +15,7 @@ spec:
       containers:
       - name: auth-mongo
         image: mongo
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 27017
 ---

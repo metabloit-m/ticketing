@@ -22,7 +22,7 @@ spec:
       containers:
       - name: expiration-redis
         image: redis
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service

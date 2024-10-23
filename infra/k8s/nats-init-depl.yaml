@@ -19,7 +19,7 @@ spec:
       containers:
       - name: nats-init
         image: metabloit/nats-init:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: NATS_URL
           value: http://nats-srv:4222

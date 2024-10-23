@@ -22,7 +22,7 @@ spec:
       containers:
       - name: orders
         image: metabloit/orders:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: NATS_URL
           value: 'http://nats-srv:4222'

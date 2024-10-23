@@ -15,7 +15,7 @@ spec:
       containers:
         - name: client
           image: metabloit/client
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service

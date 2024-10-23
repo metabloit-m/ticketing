@@ -15,7 +15,7 @@ spec:
       containers:
       - name: auth
         image: metabloit/auth
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:

@@ -22,7 +22,7 @@ spec:
       containers:
       - name: payments
         image: metabloit/payments:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: NATS_URL
           value: 'http://nats-srv:4222'
