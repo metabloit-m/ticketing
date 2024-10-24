@@ -26,6 +26,8 @@ app.use(
   }),
 );
 
+console.log("Before user router...");
+
 app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
