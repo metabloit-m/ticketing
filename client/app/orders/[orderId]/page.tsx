@@ -27,7 +27,9 @@ export default function Page({ params }: { params: { orderId: string } }) {
     };
     getData(params.orderId).then((data) => {
       setData(data);
-      setTimeLeft(parseInt((new Date(data.expiresAt) - new Date()) / 1000));
+      setTimeLeft(
+        (new Date(data.expiresAt).getTime() - new Date().getTime()) / 1000
+      );
     });
   }, []);
 

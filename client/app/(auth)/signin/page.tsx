@@ -20,7 +20,7 @@ import { Button } from '@/components/ui/button';
 
 export default function Page() {
   const router = useRouter();
-  const [error, setError] = useState('');
+  const [error, setError] = useState([]);
 
   const formSchema = z
     .object({
