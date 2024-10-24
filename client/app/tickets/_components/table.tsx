@@ -139,7 +139,7 @@ export default function TicketsTable({ tickets }) {
         loadingContent={<Spinner label='Loading...' />}
         emptyContent={'No rows to display.'}
       >
-        {(item) => (
+        {(item: { id: string }) => (
           <TableRow key={item.id}>
             {(columnKey) => (
               <TableCell>{renderCell(item, columnKey)}</TableCell>

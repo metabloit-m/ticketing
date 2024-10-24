@@ -14,7 +14,7 @@ interface ViewItemProps {
   link: string;
   title: string;
   action: string;
-  icon: React.ComponentType;
+  icon: React.ComponentType<React.SVGProps<SVGElement>>;
   cb?: () => void;
   children: React.ReactNode;
 }
@@ -28,9 +28,11 @@ export default function ViewItem({
   children,
 }: ViewItemProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [backdrop, setBackdrop] = React.useState('opaque');
+  const [backdrop, setBackdrop] = React.useState<
+    'opaque' | 'blur' | 'transparent'
+  >('opaque');
 
-  const handleOpen = (backdrop) => {
+  const handleOpen = (backdrop: 'opaque' | 'blur' | 'transparent') => {
     setBackdrop(backdrop);
     onOpen();
   };

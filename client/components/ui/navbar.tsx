@@ -24,10 +24,25 @@ type NavBarProps = {
   };
 };
 
+type Link = {
+  label: string;
+  href: string;
+  color: 'danger' | 'default' | 'primary' | 'secondary' | 'success' | 'warning';
+  variant:
+    | 'flat'
+    | 'bordered'
+    | 'light'
+    | 'solid'
+    | 'faded'
+    | 'shadow'
+    | 'ghost';
+  radius: 'sm' | 'none' | 'md' | 'lg' | 'full';
+};
+
 export function NavBar({ currentUser }: NavBarProps) {
   const pathname = usePathname();
 
-  let links = [
+  let links: Link[] = [
     !currentUser && {
       label: 'Login',
       href: '/signin',
@@ -42,10 +57,9 @@ export function NavBar({ currentUser }: NavBarProps) {
       variant: 'light',
       radius: 'sm',
     },
-  ];
+  ].filter(Boolean) as Link[];
 
-  links = links.filter(Boolean);
-
+  links = links;
   return (
     <Navbar isBordered>
       <NavbarBrand>
