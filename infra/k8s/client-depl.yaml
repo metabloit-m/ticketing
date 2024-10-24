@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: metabloit/client
+          image: metabloit/client:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
