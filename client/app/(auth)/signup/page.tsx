@@ -21,7 +21,7 @@ import { Input } from '@/components/ui/input';
 import useRequest from '@/hooks/use-request';
 
 export default function Page() {
-  const [err, setErr] = useState('');
+  const [err, setErr] = useState([]);
 
   const router = useRouter();
 

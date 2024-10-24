@@ -42,7 +42,7 @@ export default function Page() {
     resolver: zodResolver(ticketSchema),
     defaultValues: {
       title: '',
-      // price: 0.0,
+      price: 0,
     },
   });
 
@@ -79,13 +79,15 @@ export default function Page() {
           <FormField
             control={form.control}
             name='price'
-            render={({ field }) => (
+            render={({ field: { value, onChange, ...field } }) => (
               <FormItem>
                 <FormLabel>Price</FormLabel>
                 <FormControl>
                   <Input
                     type='number'
                     {...field}
+                    value={value.toString()}
+                    onChange={(e) => onChange(Number(e.target.value))}
                     placeholder='0.00'
                     labelPlacement='outside'
                     startContent={
