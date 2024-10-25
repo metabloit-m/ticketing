@@ -14,10 +14,13 @@ spec:
     spec:
       containers:
         - name: client
-          image: metabloit/client:latest
+          image: metabloit/client
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ---
 apiVersion: v1
 kind: Service
