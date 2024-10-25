@@ -7,6 +7,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "65"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "65"
+    kubernetes.io/ingress.class: nginx
 spec:
   tls:
   - hosts:
