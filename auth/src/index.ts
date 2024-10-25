@@ -2,6 +2,7 @@ import express from "express";
 import { json } from "body-parser";
 import { app } from "./app.js";
 import mongoose from "mongoose";
+import http from "http";
 
 const run = async () => {
   console.info("Starting ....");
@@ -20,7 +21,12 @@ const run = async () => {
     console.error(error);
   }
 
-  app.listen(3000, () => {
+  const server = http.createServer(app);
+
+  server.keepAliveTimeout = 61000;
+  server.headersTimeout = 62000;
+
+  server.listen(3000, () => {
     console.log("Listening on port 3000!!");
   });
 };
