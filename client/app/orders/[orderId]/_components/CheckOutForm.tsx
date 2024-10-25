@@ -32,7 +32,7 @@ export default function CheckoutForm({ dpmCheckerLink, orderId }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `https://ticketing.dev/orders/${orderId}/purchase`,
+        return_url: `https://metabloit.xyz/orders/${orderId}/purchase`,
       },
     });
 
