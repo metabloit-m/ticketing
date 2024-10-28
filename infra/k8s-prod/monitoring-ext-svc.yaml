@@ -4,13 +4,12 @@ metadata:
   name: grafana-proxy
   namespace: default
 spec:
+  type: ExternalName
+  externalName: grafana.ingress-nginx
   ports:
   - port: 3000
+    protocol: TCP
     targetPort: 3000
-  clusterIP: None
-  selector:
-    app: grafana
-    namespace: ingress-nginx
 ---
 apiVersion: v1
 kind: Service
@@ -18,10 +17,9 @@ metadata:
   name: prometheus-server-proxy
   namespace: default
 spec:
+  type: ExternalName
+  externalName: prometheus-server.ingress-nginx
   ports:
   - port: 9090
+    protocol: TCP
     targetPort: 9090
-  clusterIP: None
-  selector:
-    app: grafana
-    namespace: ingress-nginx
