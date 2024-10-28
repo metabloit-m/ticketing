@@ -50,14 +50,14 @@ spec:
           service:
             name: prometheus-server-proxy
             port:
-              number: 80
+              number: 9090
       - path: /grafana
         pathType: Prefix
         backend:
           service:
             name: grafana-proxy
             port:
-              number: 80
+              number: 3000
       - path: /?(.*)
         pathType: ImplementationSpecific
         backend:
