@@ -43,20 +43,6 @@ spec:
             name: orders-srv
             port:
               number: 3000
-      - path: /prometheus/?(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: prometheus-server
-            port:
-              number: 9090
-      - path: /grafana/?(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: grafana
-            port:
-              number: 3000
       - path: /?(.*)
         pathType: ImplementationSpecific
         backend:
