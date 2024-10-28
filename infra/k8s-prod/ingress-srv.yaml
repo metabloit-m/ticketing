@@ -4,7 +4,6 @@ metadata:
   name: ingress-service
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   tls:
@@ -56,7 +55,7 @@ spec:
           service:
             name: grafana-proxy
             port:
-              number: 3000
+              number: 80
       - path: /?(.*)
         pathType: ImplementationSpecific
         backend:
