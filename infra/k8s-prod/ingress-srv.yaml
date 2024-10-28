@@ -78,7 +78,7 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: grafana
+            name: grafana-proxy
             port:
               number: 3000
   ingressClassName: nginx
