@@ -29,6 +29,9 @@ spec:
             name: grafana
             port:
               number: 3000
+        rewrite:
+          from: /grafana/?(.*)
+          to: /$1 
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
