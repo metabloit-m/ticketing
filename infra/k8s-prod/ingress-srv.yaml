@@ -63,7 +63,7 @@ spec:
             name: grafana-proxy
             port:
               number: 3000
-      - path: /home/?(.*)
+      - path: /?(.*)
         pathType: ImplementationSpecific
         backend:
           service:
