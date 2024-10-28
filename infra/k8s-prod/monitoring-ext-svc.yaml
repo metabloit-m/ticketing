@@ -7,9 +7,9 @@ spec:
   type: ExternalName
   externalName: grafana.ingress-nginx.svc.cluster.local
   ports:
-  - port: 3000
+  - port: 80
     protocol: TCP
-    targetPort: 3000
+    targetPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -20,6 +20,6 @@ spec:
   type: ExternalName
   externalName: prometheus-server.ingress-nginx.svc.cluster.local
   ports:
-  - port: 9090
+  - port: 80
     protocol: TCP
-    targetPort: 9090
+    targetPort: 80
