@@ -46,18 +46,16 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: prometheus-server
+            name: prometheus-server.ingress-nginx.svc.cluster.local
             port:
               number: 9090
-            namespace: ingress-nginx
       - path: /grafana/?(.*)
         pathType: ImplementationSpecific
         backend:
           service:
-            name: grafana
+            name: grafana.ingress-nginx.svc.cluster.local
             port:
               number: 3000
-            namespace: ingress-nginx
       - path: /?(.*)
         pathType: ImplementationSpecific
         backend:
