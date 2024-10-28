@@ -2,33 +2,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-service
-  namespace: ingress-nginx
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-spec:
-  tls:
-  - hosts:
-    - metabloit.xyz
-    secretName: metabloit-tls
-  rules:
-  - host: metabloit.xyz
-    http:
-      paths:
-      - path: /prometheus/?(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: prometheus-server
-            port:
-              number: 9090
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ingress-service
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /grafana/$2
+    nginx.ingress.kubernetes.io/service-upstream: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   tls:
@@ -67,18 +44,25 @@ spec:
             name: orders-srv
             port:
               number: 3000
-      - path: /home?(.*)
+      - path: /prometheus/?(.*)
         pathType: ImplementationSpecific
         backend:
           service:
-            name: client-srv
+            name: prometheus-server-proxy
             port:
-              number: 3000
+              number: 9090
       - path: /grafana/?(.*)
         pathType: ImplementationSpecific
         backend:
           service:
             name: grafana-proxy
+            port:
+              number: 3000
+      - path: /?(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: client-srv
             port:
               number: 3000
   ingressClassName: nginx
