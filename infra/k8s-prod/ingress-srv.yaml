@@ -4,6 +4,7 @@ metadata:
   name: ingress-service
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/service-upstream: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   tls:
@@ -46,14 +47,14 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: prometheus-server.ingress-nginx.svc.cluster.local
+            name: prometheus-server
             port:
               number: 9090
       - path: /grafana/?(.*)
         pathType: ImplementationSpecific
         backend:
           service:
-            name: grafana.ingress-nginx.svc.cluster.local
+            name: grafana
             port:
               number: 3000
       - path: /?(.*)
