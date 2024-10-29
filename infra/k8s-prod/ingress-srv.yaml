@@ -49,13 +49,6 @@ spec:
             name: grafana
             port:
               number: 3000
-      - path: /login?(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: grafana-proxy
-            port:
-              number: 3000
       - path: /?(.*)
         pathType: ImplementationSpecific
         backend:
