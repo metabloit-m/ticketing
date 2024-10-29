@@ -37,13 +37,6 @@ spec:
             - containerPort: 3000
               name: http-grafana
               protocol: TCP
-          env:
-            - name: GF_SERVER_ROOT_URL
-              value: "https://metabloit.xyz/grafana"
-            - name: GF_SERVER_SERVE_FROM_SUBPATH
-              value: "false"
-            - name: GF_SERVER_DOMAIN
-              value: "metabloit.xyz"
           readinessProbe:
             failureThreshold: 3
             httpGet:
