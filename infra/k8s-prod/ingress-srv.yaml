@@ -4,6 +4,8 @@ metadata:
   name: ingress-service
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^/grafana/(.*) /$1 break;
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   tls:
