@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   type: ExternalName
-  externalName: grafana.ingress-nginx
+  externalName: grafana.ingress-nginx.svc.cluster.local
   ports:
   - port: 3000
     protocol: TCP
@@ -18,7 +18,7 @@ metadata:
   namespace: default
 spec:
   type: ExternalName
-  externalName: prometheus-server.ingress-nginx
+  externalName: prometheus-server.ingress-nginx.svc.cluster.local
   ports:
   - port: 9090
     protocol: TCP

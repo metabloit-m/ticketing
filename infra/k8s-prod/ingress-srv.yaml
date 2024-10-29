@@ -2,11 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-service
-  namespace: ingress-nginx
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/service-upstream: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   tls:
@@ -17,25 +14,53 @@ spec:
   - host: metabloit.xyz
     http:
       paths:
-      - path: /prometheus-mon
-        pathType: Prefix
+      - path: /api/payments/?(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
-            name: prometheus-server
-            port:
-              number: 9090
-      - path: /grafana-mon
-        pathType: Prefix
-        backend:
-          service:
-            name: grafana
+            name: payments-srv
             port:
               number: 3000
-      - path: /grafana-mon/login
+      - path: /api/users/?(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: auth-srv
+            port:
+              number: 3000
+      - path: /api/tickets/?(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: tickets-srv
+            port:
+              number: 3000
+      - path: /api/orders/?(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: orders-srv
+            port:
+              number: 3000
+      - path: /prometheus
         pathType: Prefix
         backend:
           service:
-            name: grafana
+            name: prometheus-server-proxy
+            port:
+              number: 9090
+      - path: /grafana
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana-proxy
+            port:
+              number: 3000
+      - path: /?(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: client-srv
             port:
               number: 3000
   ingressClassName: nginx
