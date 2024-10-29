@@ -42,8 +42,6 @@ spec:
               value: "https://metabloit.xyz/grafana"
             - name: GF_SERVER_SERVE_FROM_SUBPATH
               value: "true"
-            - name: GF_SERVER_DOMAIN
-              value: "metabloit.xyz"
           readinessProbe:
             failureThreshold: 3
             httpGet:
