@@ -41,7 +41,7 @@ spec:
             - name: GF_SERVER_ROOT_URL
               value: "https://metabloit.xyz/grafana"
             - name: GF_SERVER_SERVE_FROM_SUBPATH
-              value: "true"
+              value: "false"
             - name: GF_SERVER_DOMAIN
               value: "metabloit.xyz"
           readinessProbe:
