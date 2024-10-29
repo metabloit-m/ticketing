@@ -48,7 +48,7 @@ spec:
           service:
             name: grafana
             port:
-              number: http-grafana
+              number: 3000
       - path: /?(.*)
         pathType: ImplementationSpecific
         backend:
