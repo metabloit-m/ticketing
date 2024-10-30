@@ -47,9 +47,16 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: grafana
+            name: grafana-proxy
             port:
               number: 3000
+      - path: /prometheus/?(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: prometheus-server-proxy
+            port:
+              number: 9090
       - path: /?(.*)
         pathType: ImplementationSpecific
         backend:
