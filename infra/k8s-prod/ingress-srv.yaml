@@ -15,31 +15,6 @@ spec:
   - host: metabloit.xyz
     http:
       paths:
-      - path: /grafana/?(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: grafana
-            port:
-              number: 3000
-  ingressClassName: nginx
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ingress-service
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-spec:
-  tls:
-  - hosts:
-    - metabloit.xyz
-    secretName: metabloit-tls
-  rules:
-  - host: metabloit.xyz
-    http:
-      paths:
       - path: /api/payments/?(.*)
         pathType: ImplementationSpecific
         backend:
@@ -68,7 +43,14 @@ spec:
             name: orders-srv
             port:
               number: 3000
-      - path: /?(.*)
+      - path: /grafana/?(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 3000
+      - path: /()?(.*)
         pathType: ImplementationSpecific
         backend:
           service:
