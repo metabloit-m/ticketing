@@ -33,6 +33,13 @@ spec:
         - name: grafana
           image: grafana/grafana:latest
           imagePullPolicy: Always
+          env:
+            - name: GF_SERVER_DOMAIN
+              value: "metabloit.xyz"
+            - name: GF_SERVER_ROOT_URL
+              value: "https://metabloit.xyz/grafana"
+            - name: GF_SERVER_SERVE_FROM_SUB_PATH
+              value: "false"
           ports:
             - containerPort: 3000
               name: http-grafana
@@ -79,4 +86,4 @@ spec:
   selector:
     app: grafana
   sessionAffinity: None
-  type: LoadBalancer
+  type: ClusterIP
