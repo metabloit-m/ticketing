@@ -50,7 +50,7 @@ spec:
             name: grafana-proxy
             port:
               number: 3000
-      - path: /(prometheus/(?:/|$).*)
+      - path: /prometheus/?(.*)
         pathType: ImplementationSpecific
         backend:
           service:
