@@ -42,7 +42,7 @@ spec:
           service:
             name: orders-srv
             port:
-              number: 3000
+              number: 4000
       - path: /grafana/?(.*)
         pathType: ImplementationSpecific
         backend:
